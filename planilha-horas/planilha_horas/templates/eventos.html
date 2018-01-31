@@ -1,0 +1,107 @@
+{% extends 'base/table_view.html' %}
+
+{% block title %} Lançamentos {% endblock %}
+
+{# Modal definitions #}
+{% block modal_button %} Novo Evento {% endblock %}
+{% block modal_title %} Evento {% endblock %}
+{% block modal_body %}
+    <div class="row form-group">
+        <div class="col-sm-4">
+            <label for="matricula">Matrícula</label>
+            <input type="text" class="form-control" name="matricula"
+                   placeholder="Matrícula do associado"
+                   onblur="get_associado()">
+        </div>
+        <div class="col-sm-8">
+            <label for="associado">Nome do associado</label>
+            <input type="text" class="form-control" name="associado"
+                   placeholder="Nome do associado" disabled>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-8">
+            <label for="facilitador">Nome do facilitador</label>
+            <input type="text" class="form-control" name="facilitador"
+                   placeholder="Nome do facilitador" disabled>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="descricao">Descrição do evento</label>
+        <textarea type="text" class="form-control" name="descricao"
+                  placeholder="Descrição do evento"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="demandas">SGD</label>
+        <input type="text" class="form-control" name="demandas"
+               placeholder="Cód. demandas associadas (Ex.: SRV-0000, RDM-1111)">
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <label for="data-inicio">Início em</label>
+            <input type="text" class="form-control datetime-picker"
+                   name="data-inicio" placeholder="Data de início" readonly>
+            <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+        <div class="col-sm-6">
+            <label for="data-fim">Fim em</label>
+            <input type="text" class="form-control datetime-picker" name="data-fim" placeholder="Data de fim" readonly>
+        </div>
+    </div>
+{% endblock %}
+
+{# Table definitions #}
+{% block table_heading %} Eventos {% endblock %}
+{% block table_item_count %} {{ eventos|count }} {% endblock %}
+{% block table_header %}
+    <th class="text-center" style="width: 1px"><input type="checkbox"
+                                                      name="select-all"></th>
+    <th style="width: 1px;">Associado</th>
+    <th style="width: 1px;">Facilitador</th>
+    <th style="width: 1px;">Tipos de provento</th>
+    <th style="width: 1px">Descrição do evento</th>
+    <th style="width: 1px">SGDs</th>
+    <th style="width: 1px">Data início</th>
+    <th style="width: 1px">Data fim</th>
+    <th style="width: 1px">Duração</th>
+{#    <th style="width: 1px">Ações</th>#}
+{% endblock %}
+{% block table_rows %}
+    {% for evento in eventos %}
+        <tr>
+            <td class="text-center"><input type="checkbox" name="id"
+                                           value="{{ evento.id }}"></td>
+            <td>{{ evento.associado }}</td>
+            <td>{{ evento.associado.facilitador.nome }}</td>
+            <td>
+                {% for e in evento.data_inicio|tipo_evento(evento.data_fim) %}
+                    {{ e.tipo }} ({{ e.duracao }}h)<br>
+                {% endfor %}
+            </td>
+            <td>{{ evento.descricao }}</td>
+            <td>{{ evento.sgd }}</td>
+            <td>{{ evento.data_inicio|date_print() }}</td>
+            <td>{{ evento.data_fim|date_print() }}</td>
+            <td>{{ (evento.data_inicio|date_delta(evento.data_fim)).0 }}h
+                {{ (evento.data_inicio|date_delta(evento.data_fim)).1 }}m
+            </td>
+{#            <td>#}
+{#                <div class="btn-group btn-group-xs"#}
+{#                     role="group" aria-label="...">#}
+{#                    <button type="button" class="btn btn-danger btn-xs"><span#}
+{#                            class="glyphicon glyphicon-erase"#}
+{#                            data-toggle="modal"#}
+{#                            data-target="#deleteRegisterModal"#}
+{#                            aria-hidden="true"></span></button>#}
+{#                    <button type="button" class="btn btn-warning btn-xs"><span#}
+{#                            class="glyphicon glyphicon-refresh"#}
+{#                            data-toggle="modal"#}
+{#                            data-target="#newRegisterModal"#}
+{#                            aria-hidden="true"></span></button>#}
+{#                </div>#}
+{#            </td>#}
+        </tr>
+    {% endfor %}
+{% endblock %}
+

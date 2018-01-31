@@ -1,0 +1,120 @@
+{% extends 'base/base_template.html' %}
+
+{% block page_js %}../../static/js/table_view.js{% endblock %}
+
+{% block container %}
+
+    <!-- Modals: dialog boxes -->
+    <!-- New register -->
+    <div class="modal fade" id="newRegisterModal" tabindex="-1" role="dialog"
+         aria-labelledby="newRegisterModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="newRegisterModalLabel">
+                        {% block modal_title %}{% endblock %}</h4>
+                </div>
+                <form method="post" id="form">
+                    <div class="modal-body">
+                        {% block modal_body %}{% endblock %}
+                    </div>
+                    <div class="modal-footer">
+                        <div class="alert alert-success text-left" role="alert"
+                             style="display:none">
+                        </div>
+                        <div class="alert alert-danger text-left" role="alert"
+                             style="display:none">
+                        </div>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Fechar
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                onclick="submit_form()">OK
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Delete registers -->
+    <div class="modal fade" id="deleteRegisterModal" tabindex="-1" role="dialog"
+         aria-labelledby="deleteRegisterModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="deleteRegisterModalLabel">
+                        Excluir selecionado(s)</h4>
+                </div>
+                <form method="post" id="form">
+                    <div class="modal-body">
+                        Deseja realmente excluir os registros selecionados?
+                    </div>
+                    <div class="modal-footer">
+                        <div class="alert alert-success text-left" role="alert"
+                             style="display:none">
+                        </div>
+                        <div class="alert alert-danger text-left" role="alert"
+                             style="display:none">
+                        </div>
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">Cancelar
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                id="yes-btn">Sim
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <h1 class="panel-title pull-left">
+                {% block table_heading %}{% endblock %} <span
+                    class="badge">{% block table_item_count %}{% endblock %}</span>
+            </h1>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-sm pull-right"
+                    data-toggle="modal" data-target="#newRegisterModal">
+                <span
+                        class="glyphicon glyphicon-plus"
+                        aria-hidden="true"></span>
+                {% block modal_button %}{% endblock %}
+            </button>
+            <div class="btn-group btn-group-sm pull-right"
+                 style="margin: 0 15px" role="group" aria-label="...">
+                <button type="button"
+                        class="btn btn-danger delete-selected"
+                        data-toggle="modal"
+                        data-target="#deleteRegisterModal"
+                        disabled>
+                    <span
+                            class="glyphicon glyphicon-erase"
+                            aria-hidden="true"></span> Excluir selecionado(s)
+                </button>
+            </div>
+        </div>
+
+        <!-- Main content: Table -->
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+            <tr>
+                {% block table_header %}{% endblock %}
+            </tr>
+            </thead>
+            <tbody>
+            {% block table_rows %}{% endblock %}
+            </tbody>
+        </table>
+    </div>
+
+
+{% endblock %}

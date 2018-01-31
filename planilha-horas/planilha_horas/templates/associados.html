@@ -1,0 +1,111 @@
+{% extends 'base/table_view.html' %}
+
+{% block title %} Associados {% endblock %}
+
+{# Modal definitions #}
+{% block modal_button %} Novo Associado {% endblock %}
+{% block modal_title %} Associado {% endblock %}
+{% block modal_body %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="empresa">Empresa</label>
+                <select class="form-control" name="empresa">
+                    {% for empresa in empresas %}
+                        <option value="{{ empresa.codigo }}">{{ empresa.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="matricula">Matrícula</label>
+                <input type="text" class="form-control" name="matricula"
+                       placeholder="Matrícula do associado">
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="matricula">Centro de Resultado</label>
+                <input type="text" class="form-control" name="cr"
+                       placeholder="Sigla do CR">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="nome-associado">Nome completo do associado</label>
+        <input type="text" class="form-control" name="nome-associado"
+               placeholder="Nome do associado">
+    </div>
+    <div class="form-group">
+        <label for="usuario">Usuário de rede</label>
+        <input type="text" class="form-control" name="usuario"
+               placeholder="Usuário de rede">
+    </div>
+    <div class="form-group">
+        <label for="perfil">Perfil de usuário</label>
+        <select class="form-control" name="perfil">
+            <option value="ASSOCIADO" selected>ASSOCIADO</option>
+            <option value="FACILITADOR">FACILITADOR</option>
+            <option value="GESTOR">GESTOR</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="facilitador">Facilitador</label>
+        <select class="form-control" name="facilitador">
+            <option value="0" selected></option>
+            {% for facilitador in facilitadores %}
+                <option value="{{ facilitador.matricula }}">{{ facilitador.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+{% endblock %}
+
+{# Table definitions #}
+{% block table_heading %} Associados {% endblock %}
+{% block table_item_count %} {{ associados|count }} {% endblock %}
+{% block table_header %}
+    <th class="text-center" style="width: 1px"><input type="checkbox"
+                                                      name="select-all"></th>
+    <th style="width: 1px;">Associado</th>
+    <th style="width: 1px">Matrícula</th>
+    <th style="width: 1px;">Usuário</th>
+    <th style="width: 1px;">Perfil</th>
+    <th style="width: 1px">Facilitador</th>
+    <th style="width: 1px">Empresa</th>
+    <th style="width: 1px">CR</th>
+{#    <th style="width: 1px">Ações</th>#}
+{% endblock %}
+{% block table_rows %}
+    {% for associado in associados %}
+        <tr>
+            <td class="text-center"><input type="checkbox" name="id"
+                                           value="{{ associado.matricula }}"></td>
+            <td>{{ associado.nome }}</td>
+            <td>{{ associado.matricula }}</td>
+            <td>{{ associado.usuario }}</td>
+            <td>{{ associado.perfil }}</td>
+            <td>{{ associado.facilitador }}</td>
+            <td>{{ associado.empresa }}</td>
+            <td>{{ associado.cr }}</td>
+{#            <td>#}
+{#                <div class="btn-group btn-group-xs"#}
+{#                     role="group" aria-label="...">#}
+{#                    <button type="button" class="btn btn-danger btn-xs"#}
+{#                            value="{{ associado.id }}"#}
+{#                            data-toggle="modal"#}
+{#                            data-target="#deleteRegisterModal"><span#}
+{#                            class="glyphicon glyphicon-erase"#}
+{#                            aria-hidden="true"></span></button>#}
+{#                    <button type="button" class="btn btn-warning btn-xs"#}
+{#                            value="{{ associado.id }}"#}
+{#                            data-toggle="modal"#}
+{#                            data-target="#newRegisterModal"><span#}
+{#                            class="glyphicon glyphicon-refresh"#}
+{#                            aria-hidden="true"></span></button>#}
+{#                </div>#}
+{#            </td>#}
+        </tr>
+    {% endfor %}
+{% endblock %}
+

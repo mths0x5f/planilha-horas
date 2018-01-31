@@ -1,0 +1,23 @@
+/* CSS in constant change */
+
+h1 {
+    margin-bottom: .67em;
+}
+
+.panel-title {
+    line-height: 30px;
+}
+
+.apps-counter {
+    line-height: 30px;
+    background: lightgrey;
+    border-radius: 2px;
+    margin: 5px;
+    padding: 2px;
+}
+
+th {
+    width: auto;
+}
+
+body { padding-top: 70px; }
