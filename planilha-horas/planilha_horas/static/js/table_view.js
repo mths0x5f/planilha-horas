@@ -40,7 +40,7 @@ $('#deleteRegisterModal #yes-btn').on('click', function () {
     });
     console.log(JSON.stringify(ids));
     $.ajax({
-        url: '/api'+window.location.pathname,
+        url: '/api' + window.location.pathname,
         method: 'DELETE',
         data: JSON.stringify(ids),
         contentType: 'application/json',
@@ -68,11 +68,15 @@ function get_associado() {
 
 function submit_form() {
     $.ajax({
-        url: '/api'+window.location.pathname,
+        url: '/api' + window.location.pathname,
         method: 'POST',
         data: $('form').serialize(),
         success: function (data) {
             show_alert('div.alert-success', data);
+            window.setTimeout(function () {
+                $('#newRegisterModal').modal('toggle');
+            }, 2000);
+
         },
         error: function (data) {
             show_alert('div.alert-danger', data.responseJSON);
@@ -96,6 +100,6 @@ $('.datetime-picker').datetimepicker({
     pickerPosition: 'top-right',
     autoclose: true,
     maxView: 2,
-    startDate: new Date(new Date(new Date().setMonth(new Date().getMonth()-1)).setDate(15)),
+    startDate: new Date(new Date(new Date().setMonth(new Date().getMonth() - 1)).setDate(15)),
     endDate: new Date(new Date().setDate(15)),
 });

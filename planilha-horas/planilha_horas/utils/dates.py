@@ -22,6 +22,7 @@ def retroativo(data):
         return True
     return False
 
+
 def evento_maior_que_24h(data_inicio, data_fim):
     s = datetime.strptime(data_inicio, DATE_FORMAT)
     e = datetime.strptime(data_fim, DATE_FORMAT)
